@@ -35,13 +35,6 @@ This application is designed to streamline the process of scheduling appointment
 - **.NET Framework**: For backend development, providing robust server-side logic.
 - **Llama AI**: Utilized for AI-driven diagnosis and doctor specialization suggestions.
 
-## Contributing
-
-Contributions are welcome! Please feel free to open issues or pull requests for any improvements or features you'd like to see added.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
 ## Authors
