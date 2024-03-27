@@ -42,3 +42,10 @@ This application is designed to streamline the process of scheduling appointment
 Maro Ančić 
 
 Josip Domjanović
+
+
+## Database 
+
+
+![image](https://github.com/OSS-Csharp-Seminar/-Patient-Ordering-System-with-AI/assets/122830825/2cfb455c-4fed-4a39-819d-05b543292392)
+
