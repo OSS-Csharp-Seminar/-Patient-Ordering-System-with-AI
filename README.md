@@ -47,5 +47,5 @@ Josip Domjanović
 ## Database 
 
 
-![image](https://github.com/OSS-Csharp-Seminar/-Patient-Ordering-System-with-AI/assets/122830825/2cfb455c-4fed-4a39-819d-05b543292392)
+![image](https://github.com/OSS-Csharp-Seminar/-Patient-Ordering-System-with-AI/assets/122830825/09018bdf-a9cd-41f2-8038-023b6f185004)
 
