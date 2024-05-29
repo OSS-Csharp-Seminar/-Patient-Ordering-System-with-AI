@@ -1,25 +1,36 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# Utilizăm imaginea oficială .NET 6 SDK pentru a construi aplicația noastră
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# Setăm directorul de lucru la folderul radăcină al aplicației
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["HospitalApp/HospitalApp.csproj", "HospitalApp/"]
-RUN dotnet restore "HospitalApp/HospitalApp.csproj"
+# Copiem fișierele de proiect și csproj în directorul curent
+COPY src/N-Tier.API/*.csproj ./src/N-Tier.API/
+COPY src/N-Tier.Application/*.csproj ./src/N-Tier.Application/
+COPY src/N-Tier.Core/*.csproj ./src/N-Tier.Core/
+COPY src/N-Tier.DataAccess/*.csproj ./src/N-Tier.DataAccess/
+COPY src/N-Tier.Shared/*.csproj ./src/N-Tier.Shared/
+
+# Restaurăm pachetele NuGet în directorul corespunzător
+WORKDIR /app/src/N-Tier.API
+RUN dotnet restore
+
+# Copiem întregul conținut al soluției în container
+WORKDIR /app
 COPY . .
-WORKDIR "/src/HospitalApp"
-RUN dotnet build "HospitalApp.csproj" -c Release -o /app/build
 
+# Setăm directorul de lucru la proiectul API
+WORKDIR /app/src/N-Tier.API
+
+# Construim aplicația
+RUN dotnet build -c Release -o /app/build
+
+# Stage final pentru a crea imaginea de producție
 FROM build AS publish
-RUN dotnet publish "HospitalApp.csproj" -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
-FROM base AS final
+# Creăm imaginea finală, folosind imaginea oficială .NET 6 pentru aplicații ASP.NET
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HospitalApp.dll"]
+ENTRYPOINT ["dotnet", "N-Tier.API.dll"]
