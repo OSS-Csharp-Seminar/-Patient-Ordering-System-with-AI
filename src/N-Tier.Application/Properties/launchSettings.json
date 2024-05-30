@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Hospital.Application": {
+      "commandName": "Project"
+    }
+  }
+}
