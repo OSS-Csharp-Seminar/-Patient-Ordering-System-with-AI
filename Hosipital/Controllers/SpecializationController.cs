@@ -10,9 +10,9 @@ namespace YourProjectNamespace.Controllers
     [Route("api/[controller]")]
     public class SpecializationController : ControllerBase
     {
-        private readonly ISpecializationService _specializationService;
+        private readonly SpecializationService _specializationService;
 
-        public SpecializationController(ISpecializationService specializationService)
+        public SpecializationController(SpecializationService specializationService)
         {
             _specializationService = specializationService;
         }

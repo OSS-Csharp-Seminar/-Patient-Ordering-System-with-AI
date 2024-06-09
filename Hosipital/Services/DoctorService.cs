@@ -68,5 +68,25 @@ namespace Services
         {
             await _repository.SaveChangesAsync();
         }
+
+        public async Task<Doctor> LoginAsync(string name, string password)
+        {
+            return await _repository.LoginAsync(name, password);
+        }
+
+        public async Task<bool> DoctorExistsAsync(string name)
+        {
+            return await _repository.DoctorExistsAsync(name);
+        }
+
+
+        public async Task<Doctor> RegisterAsync(Doctor doctor)
+        {
+            
+            await _repository.AddAsync(doctor);
+            await _repository.SaveChangesAsync();
+            return doctor;
+        }
+
     }
 }

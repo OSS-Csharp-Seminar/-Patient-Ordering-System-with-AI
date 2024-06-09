@@ -11,9 +11,9 @@ namespace N_Tier.API.Controllers
     [ApiController]
     public class DoctorController : ControllerBase
     {
-        private readonly IDoctorService _doctorService;
+        private readonly DoctorService _doctorService;
 
-        public DoctorController(IDoctorService doctorService)
+        public DoctorController(DoctorService doctorService)
         {
             _doctorService = doctorService;
         }
@@ -55,14 +55,18 @@ namespace N_Tier.API.Controllers
 
             try
             {
+                // Check if the doctor with the given name exists
+                var doctorExists = await _doctorService.DoctorExistsAsync(doctor.Name);
+                if (!doctorExists)
+                {
+                    return NotFound(); // Return 404 if the doctor doesn't exist
+                }
+
                 await _doctorService.SaveChangesAsync();
             }
             catch (Exception)
             {
-                if (!await _doctorService.DoctorExistsAsync(doctor.Name))
-                {
-                    return NotFound();
-                }
+                // Handle other exceptions here
                 throw;
             }
 

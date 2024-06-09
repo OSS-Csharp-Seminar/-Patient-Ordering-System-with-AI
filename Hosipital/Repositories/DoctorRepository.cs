@@ -7,8 +7,8 @@ using Models;
 
 namespace Repositories
 {
-    
-    public class DoctorRepository 
+
+    public class DoctorRepository
     {
         private readonly DbContext _context;
 
@@ -56,5 +56,16 @@ namespace Repositories
         {
             return _context.SaveChangesAsync();
         }
+
+        public async Task<bool> DoctorExistsAsync(string name)
+        {
+            return await _context.Set<Doctor>().AnyAsync(d => d.Name == name);
+        }
+
+        public async Task<Doctor> LoginAsync(string name, string password)
+        {
+            return await _context.Set<Doctor>().FirstOrDefaultAsync(d => d.Name == name && d.Password == password);
+        }
+
     }
 }

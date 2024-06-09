@@ -11,9 +11,9 @@ namespace N_Tier.API.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderService;
+        private readonly OrderService _orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(OrderService orderService)
         {
             _orderService = orderService;
         }

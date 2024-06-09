@@ -11,9 +11,9 @@ namespace N_Tier.API.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private readonly IPatientService _patientService;
+        private readonly PatientService _patientService;
 
-        public PatientController(IPatientService patientService)
+        public PatientController(PatientService patientService)
         {
             _patientService = patientService;
         }
