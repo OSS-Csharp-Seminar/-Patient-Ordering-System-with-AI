@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using DataAccess;
 
 
 namespace Repositories
@@ -10,9 +11,9 @@ namespace Repositories
 
     public class SpecializationRepository 
     {
-        private readonly DbContext _context;
+        private readonly DatabaseContext _context;
 
-        public SpecializationRepository(DbContext context)
+        public SpecializationRepository(DatabaseContext context)
         {
             _context = context;
         }
@@ -30,6 +31,8 @@ namespace Repositories
         public async Task AddAsync(Specialization entity)
         {
             await _context.Set<Specialization>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+
         }
 
         public async Task AddRangeAsync(IEnumerable<Specialization> entities)

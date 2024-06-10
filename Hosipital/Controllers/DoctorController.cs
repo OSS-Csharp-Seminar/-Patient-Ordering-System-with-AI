@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace N_Tier.API.Controllers
+namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace N_Tier.API.Controllers
         {
             _doctorService = doctorService;
         }
-
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctors()
         {

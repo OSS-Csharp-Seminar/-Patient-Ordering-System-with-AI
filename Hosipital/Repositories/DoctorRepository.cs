@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using DataAccess;
 using Models;
 
 
@@ -10,9 +10,9 @@ namespace Repositories
 
     public class DoctorRepository
     {
-        private readonly DbContext _context;
+        private readonly DatabaseContext _context;
 
-        public DoctorRepository(DbContext context)
+        public DoctorRepository(DatabaseContext context)
         {
             _context = context;
         }

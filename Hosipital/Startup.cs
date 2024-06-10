@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using DataAccess;
+using Services;
+using Repositories;
 
 public class Startup
 {
@@ -20,16 +22,36 @@ public class Startup
     {
         services.AddRazorPages();
 
-        services.AddControllers().AddNewtonsoftJson();
 
+        services.AddScoped<SpecializationService>();
+        services.AddScoped<PatientService>();
+        services.AddScoped<DoctorService>();
+        services.AddScoped<OrderService>();
+
+
+        services.AddScoped<SpecializationRepository>();  
+        services.AddScoped<PatientRepository>();         
+        services.AddScoped<DoctorRepository>();         
+        services.AddScoped<OrderRepository>();          
+
+
+
+        services.AddControllers().AddNewtonsoftJson();
+        
+        
+        
+        
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital API", Version = "v1" });
         });
 
         services.AddDbContext<DatabaseContext>(options =>
-            options.UseMySQL(Configuration.GetConnectionString("DefaultConnection"))
-        );
+        {
+            options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 4, 0)));
+
+        });
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

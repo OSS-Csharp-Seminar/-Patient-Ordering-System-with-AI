@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     public class Doctor
     {
@@ -10,9 +8,5 @@ namespace Models
         public string Password { get; set; }
         public int SpecializationId { get; set; }
         public string Contact { get; set; }
-
-        // Navigation Properties
-        public Specialization Specialization { get; set; }
-        public ICollection<Order> Orders { get; set; }
     }
 }

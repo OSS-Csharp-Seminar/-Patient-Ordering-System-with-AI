@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using DataAccess;
 
 namespace Repositories
 {
     public class OrderRepository
     {
-        private readonly DbContext _context;
+        private readonly DatabaseContext _context;
 
-        public OrderRepository(DbContext context)
+        public OrderRepository(DatabaseContext context)
         {
             _context = context;
         }

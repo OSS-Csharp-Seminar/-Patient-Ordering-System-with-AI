@@ -13,27 +13,22 @@ namespace DataAccess
         // Add constructor that accepts DbContextOptions
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Specialization - Doctor relationship
             modelBuilder.Entity<Doctor>()
-                .HasOne(d => d.Specialization)
-                .WithMany(s => s.Doctors)
-                .HasForeignKey(d => d.SpecializationId);
+                .Property(d => d.SpecializationId);
 
             // Doctor - Order relationship
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Doctor)
-                .WithMany(d => d.Orders)
-                .HasForeignKey(o => o.DoctorId);
+                .Property(o => o.DoctorId);
 
             // Patient - Order relationship
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Patient)
-                .WithMany(p => p.Orders)
-                .HasForeignKey(o => o.PatientId);
+                .Property(o => o.PatientId);
         }
     }
 }

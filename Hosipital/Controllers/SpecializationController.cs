@@ -4,7 +4,7 @@ using Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace YourProjectNamespace.Controllers
+namespace Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

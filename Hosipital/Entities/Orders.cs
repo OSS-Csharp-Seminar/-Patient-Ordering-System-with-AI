@@ -9,9 +9,5 @@ namespace Models
         public int PatientId { get; set; }
         public DateTime DateOfAppointment { get; set; }
         public string Diagnosis { get; set; }
-
-        // Navigation Properties
-        public Doctor Doctor { get; set; }
-        public Patient Patient { get; set; }
     }
 }

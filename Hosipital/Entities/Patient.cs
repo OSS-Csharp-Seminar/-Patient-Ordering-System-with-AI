@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     public class Patient
     {
@@ -9,8 +7,5 @@ namespace Models
         public string Surname { get; set; }
         public string Password { get; set; }
         public string Contact { get; set; }
-
-        // Navigation Properties
-        public ICollection<Order> Orders { get; set; }
     }
 }

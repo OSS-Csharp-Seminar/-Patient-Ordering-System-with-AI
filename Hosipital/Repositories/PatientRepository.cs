@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using DataAccess;
 
 namespace Repositories
 {
     public class PatientRepository
     {
-        private readonly DbContext _context;
+        private readonly DatabaseContext _context;
 
-        public PatientRepository(DbContext context)
+        public PatientRepository(DatabaseContext context)
         {
             _context = context;
         }
