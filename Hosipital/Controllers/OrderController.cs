@@ -19,7 +19,14 @@ namespace Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetAllOrders()
+        public async Task<ActionResult<IEnumerable<Order>>> GetAllOrders(
+            [FromQuery] string? patientName = null,
+            [FromQuery] string? patientSurname = null,
+            [FromQuery] string? doctorName = null,
+            [FromQuery] string? doctorSurname = null,
+            [FromQuery] string? doctorSpecialization = null,
+            [FromQuery] DateTime? dateOfAppointment = null,
+            [FromQuery] string? sortBy = null)
         {
             var orders = await _orderService.GetAllAsync();
             return Ok(orders);

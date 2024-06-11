@@ -19,9 +19,9 @@ namespace Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null)
+        public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null,[FromQuery] string? filterBySpec=null)
         {
-            var doctors = await _doctorService.GetAllAsync(sortBy, filterBy);
+            var doctors = await _doctorService.GetAllAsync(sortBy, filterBy,filterBySpec);
             return Ok(doctors);
         }
 

@@ -10,7 +10,13 @@ namespace Services
     public interface IOrderService
     {
         Task<Order> GetByIdAsync(int id);
-        Task<IEnumerable<Order>> GetAllAsync();
+        Task<IEnumerable<Order>> GetAllAsync(string patientName = null,
+            string patientSurname = null,
+            string doctorName = null,
+            string doctorSurname = null,
+            string doctorSpecialization = null,
+            DateTime? dateOfAppointment = null,
+            string sortBy = null);
         Task AddAsync(Order entity);
         Task AddRangeAsync(IEnumerable<Order> entities);
         void Update(Order entity);
@@ -35,9 +41,15 @@ namespace Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<IEnumerable<Order>> GetAllAsync(string patientName = null,
+            string patientSurname = null,
+            string doctorName = null,
+            string doctorSurname = null,
+            string doctorSpecialization = null,
+            DateTime? dateOfAppointment = null,
+            string sortBy = null)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(patientName,patientSurname,doctorName,doctorSurname,doctorSpecialization,dateOfAppointment,sortBy);
         }
 
         public async Task AddAsync(Order entity)

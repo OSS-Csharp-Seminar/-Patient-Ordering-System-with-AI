@@ -22,13 +22,27 @@ namespace Repositories
             return await _context.Set<Doctor>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null)
+        public async Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null, string filterBySpecialization = null)
         {
-            var query = _context.Set<Doctor>().AsQueryable();
+            var query = from doctor in _context.Set<Doctor>()
+                        join specialization in _context.Set<Specialization>()
+                        on doctor.SpecializationId equals specialization.Id
+                        select new
+                        {
+                            Doctor = doctor,
+                            SpecializationName = specialization.Name
+                        };
 
             if (!string.IsNullOrEmpty(filterBy))
             {
-                query = query.Where(s => s.Name.Contains(filterBy) || s.Surname.Contains(filterBy) || s.Contact.Contains(filterBy));
+                query = query.Where(s => s.Doctor.Name.Contains(filterBy) ||
+                                         s.Doctor.Surname.Contains(filterBy) ||
+                                         s.Doctor.Contact.Contains(filterBy));
+            }
+
+            if (!string.IsNullOrEmpty(filterBySpecialization))
+            {
+                query = query.Where(s => s.SpecializationName.Contains(filterBySpecialization));
             }
 
             if (!string.IsNullOrEmpty(sortBy))
@@ -36,37 +50,38 @@ namespace Repositories
                 switch (sortBy.ToLower())
                 {
                     case "name":
-                        query = query.OrderBy(s => s.Name);
+                        query = query.OrderBy(s => s.Doctor.Name);
                         break;
                     case "name_desc":
-                        query = query.OrderByDescending(s => s.Name);
+                        query = query.OrderByDescending(s => s.Doctor.Name);
                         break;
-
                     case "surname":
-                        query = query.OrderBy(s => s.Surname);
+                        query = query.OrderBy(s => s.Doctor.Surname);
                         break;
                     case "surname_desc":
-                        query = query.OrderByDescending(s => s.Surname);
+                        query = query.OrderByDescending(s => s.Doctor.Surname);
                         break;
                     case "specialization":
-                        query = query.OrderBy(s => s.SpecializationId);
+                        query = query.OrderBy(s => s.SpecializationName);
                         break;
                     case "specialization_desc":
-                        query = query.OrderByDescending(s => s.SpecializationId);
+                        query = query.OrderByDescending(s => s.SpecializationName);
                         break;
                     default:
-                        query = query.OrderBy(s => s.Id);
+                        query = query.OrderBy(s => s.Doctor.Id);
                         break;
-
                 }
             }
             else
             {
-                query = query.OrderBy(s => s.Id);
+                query = query.OrderBy(s => s.Doctor.Id);
             }
 
-            return await query.ToListAsync();
+            var result = await query.Select(s => s.Doctor).ToListAsync();
+            return result;
         }
+
+
         public async Task AddAsync(Doctor entity)
         {
             await _context.Set<Doctor>().AddAsync(entity);
