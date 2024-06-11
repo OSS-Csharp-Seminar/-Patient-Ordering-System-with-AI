@@ -60,5 +60,11 @@ namespace Services
         {
             _repository.RemoveRange(entities);
         }
+
+        public async Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null)
+        {
+            return await _repository.GetAllAsync(sortBy, filterBy);
+        }
+
     }
 }

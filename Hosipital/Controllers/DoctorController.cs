@@ -17,11 +17,11 @@ namespace Controllers
         {
             _doctorService = doctorService;
         }
-        
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctors()
+        public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null)
         {
-            var doctors = await _doctorService.GetAllAsync();
+            var doctors = await _doctorService.GetAllAsync(sortBy, filterBy);
             return Ok(doctors);
         }
 

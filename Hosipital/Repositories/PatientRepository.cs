@@ -20,9 +20,43 @@ namespace Repositories
             return await _context.Set<Patient>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<Patient>> GetAllAsync()
+        public async Task<IEnumerable<Patient>> GetAllAsync(string sortBy = null, string filterBy = null)
         {
-            return await _context.Set<Patient>().ToListAsync();
+            var query = _context.Set<Patient>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterBy))
+            {
+                query = query.Where(s => s.Name.Contains(filterBy) || s.Surname.Contains(filterBy) || s.Contact.Contains(filterBy));
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "name":
+                        query = query.OrderBy(s => s.Name);
+                        break;
+                    case "name_desc":
+                        query = query.OrderByDescending(s => s.Name);
+                        break;
+
+                    case "surname":
+                        query = query.OrderBy(s => s.Surname);
+                        break;
+                    case "surname_desc":
+                        query = query.OrderByDescending(s => s.Surname);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Id);
+                        break;
+                }
+            }
+            else
+            {
+                query = query.OrderBy(s => s.Id);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Patient> GetByNameAsync(string name)

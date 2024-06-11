@@ -54,5 +54,40 @@ namespace Repositories
         {
             _context.Set<Specialization>().RemoveRange(entities);
         }
+
+
+
+        public async Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null)
+        {
+            var query = _context.Set<Specialization>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterBy))
+            {
+                query = query.Where(s => s.Name.Contains(filterBy));
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "name":
+                        query = query.OrderBy(s => s.Name);
+                        break;
+                    case "name_desc":
+                        query = query.OrderByDescending(s => s.Name);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Id);
+                        break;
+                }
+            }
+            else
+            {
+                query = query.OrderBy(s => s.Id); 
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }

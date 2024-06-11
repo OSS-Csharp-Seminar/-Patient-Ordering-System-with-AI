@@ -8,7 +8,7 @@ namespace Services
     public interface IPatientService
     {
         Task<Patient> GetByIdAsync(int id);
-        Task<IEnumerable<Patient>> GetAllAsync();
+        Task<IEnumerable<Patient>> GetAllAsync(string sortBy = null, string filterBy = null);
         Task AddAsync(Patient entity);
         Task AddRangeAsync(IEnumerable<Patient> entities);
         void Update(Patient entity);
@@ -33,9 +33,9 @@ namespace Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Patient>> GetAllAsync()
+        public async Task<IEnumerable<Patient>> GetAllAsync(string sortBy = null, string filterBy = null)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(sortBy, filterBy);
         }
 
         public async Task AddAsync(Patient entity)

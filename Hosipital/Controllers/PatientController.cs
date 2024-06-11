@@ -19,9 +19,9 @@ namespace Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatients()
+        public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null)
         {
-            var patients = await _patientService.GetAllAsync();
+            var patients = await _patientService.GetAllAsync(sortBy, filterBy);
             return Ok(patients);
         }
 

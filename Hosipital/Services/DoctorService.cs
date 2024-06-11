@@ -34,9 +34,9 @@ namespace Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllAsync()
+        public async Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(sortBy, filterBy);
         }
 
         public async Task<Doctor> AddAsync(Doctor doctor)

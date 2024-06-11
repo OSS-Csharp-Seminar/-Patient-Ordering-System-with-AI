@@ -24,12 +24,8 @@ namespace Controllers
             return Ok(specialization);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var specializations = await _specializationService.GetAllAsync();
-            return Ok(specializations);
-        }
+        
+        
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
@@ -66,5 +62,16 @@ namespace Controllers
             _specializationService.Remove(specialization);
             return NoContent();
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null)
+        {
+            var specializations = await _specializationService.GetAllAsync(sortBy, filterBy);
+            return Ok(specializations);
+        }
+
+
+
     }
 }
