@@ -39,9 +39,10 @@ namespace Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task AddAsync(Doctor entity)
+        public async Task<Doctor> AddAsync(Doctor doctor)
         {
-            await _repository.AddAsync(entity);
+            await _repository.AddAsync(doctor);
+            return doctor;
         }
 
         public async Task AddRangeAsync(IEnumerable<Doctor> entities)

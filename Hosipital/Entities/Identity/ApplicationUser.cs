@@ -18,8 +18,6 @@ namespace Identity
 
         public string IdCardNumber { get; set; }
 
-        public ICollection<Patient> CustomerLoan { get; } = new List<Patient>();
 
-        public ICollection<Patient> LibrarianLoan { get; } = new List<Patient>();
     }
 }

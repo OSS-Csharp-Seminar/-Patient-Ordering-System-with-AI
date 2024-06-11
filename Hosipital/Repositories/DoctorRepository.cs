@@ -30,6 +30,7 @@ namespace Repositories
         public async Task AddAsync(Doctor entity)
         {
             await _context.Set<Doctor>().AddAsync(entity);
+            await _context.SaveChangesAsync(); 
         }
 
         public async Task AddRangeAsync(IEnumerable<Doctor> entities)
