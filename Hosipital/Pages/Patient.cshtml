@@ -36,7 +36,7 @@
 <!-- Create or Update Patient Form -->
 <h2>@(Model.Patient.Id == 0 ? "Create Patient" : "Update Patient")</h2>
 <form method="post" asp-page-handler="@(Model.Patient.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Patient.Id">
-    <input type="hidden" asp-for="Patient.Id" />
+    <input type="text" asp-for="Patient.Id" />
     <div>
         <label asp-for="Patient.Name"></label>
         <input asp-for="Patient.Name" />
@@ -60,48 +60,4 @@
     <button type="submit">@(Model.Patient.Id == 0 ? "Create" : "Update")</button>
 </form>
 
-<!-- Register Form -->
-<h2>Register</h2>
-<form method="post" asp-page-handler="Register">
-    <div>
-        <label asp-for="Patient.Name"></label>
-        <input asp-for="Patient.Name" />
-        <span asp-validation-for="Patient.Name"></span>
-    </div>
-    <div>
-        <label asp-for="Patient.Surname"></label>
-        <input asp-for="Patient.Surname" />
-        <span asp-validation-for="Patient.Surname"></span>
-    </div>
-    <div>
-        <label asp-for="Patient.Contact"></label>
-        <input asp-for="Patient.Contact" />
-        <span asp-validation-for="Patient.Contact"></span>
-    </div>
-    <div>
-        <label asp-for="Patient.Password"></label>
-        <input asp-for="Patient.Password" type="password" />
-        <span asp-validation-for="Patient.Password"></span>
-    </div>
-    <button type="submit">Register</button>
-</form>
 
-<!-- Login Form -->
-<h2>Login</h2>
-<form method="post" asp-page-handler="Login">
-    <div>
-        <label asp-for="Patient.Name"></label>
-        <input asp-for="Patient.Name" />
-        <span asp-validation-for="Patient.Name"></span>
-    </div>
-    <div>
-        <label asp-for="Patient.Password"></label>
-        <input asp-for="Patient.Password" type="password" />
-        <span asp-validation-for="Patient.Password"></span>
-    </div>
-    <button type="submit">Login</button>
-</form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

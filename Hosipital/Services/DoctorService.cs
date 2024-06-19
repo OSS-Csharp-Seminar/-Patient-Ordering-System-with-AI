@@ -5,23 +5,24 @@ using Repositories;
 
 namespace Services
 {
+
     public interface IDoctorService
     {
         Task<Doctor> GetByIdAsync(int id);
-        Task<IEnumerable<Doctor>> GetAllAsync();
-        Task AddAsync(Doctor entity);
-        Task AddRangeAsync(IEnumerable<Doctor> entities);
+        Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null, string filterBySpecialization = null);
+        Task<Doctor> AddAsync(Doctor entity);
         void Update(Doctor entity);
         void Remove(Doctor entity);
-        void RemoveRange(IEnumerable<Doctor> entities);
+        Task SaveChangesAsync();
         Task<Doctor> RegisterAsync(Doctor doctor);
         Task<Doctor> LoginAsync(string name, string password);
         Task<bool> DoctorExistsAsync(string name);
-        Task SaveChangesAsync();
     }
 
-    public class DoctorService
+
+    public class DoctorService : IDoctorService
     {
+
         private readonly DoctorRepository _repository;
 
         public DoctorService(DoctorRepository repository)
@@ -34,20 +35,15 @@ namespace Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null,string filterBySpec=null)
+        public async Task<IEnumerable<Doctor>> GetAllAsync(string sortBy = null, string filterBy = null, string filterBySpec = null)
         {
-            return await _repository.GetAllAsync(sortBy, filterBy,filterBySpec);
+            return await _repository.GetAllAsync(sortBy, filterBy, filterBySpec);
         }
 
-        public async Task<Doctor> AddAsync(Doctor doctor)
+        public async Task<Doctor> AddAsync(Doctor entity)
         {
-            await _repository.AddAsync(doctor);
-            return doctor;
-        }
-
-        public async Task AddRangeAsync(IEnumerable<Doctor> entities)
-        {
-            await _repository.AddRangeAsync(entities);
+            await _repository.AddAsync(entity);
+            return entity;
         }
 
         public void Update(Doctor entity)
@@ -60,14 +56,16 @@ namespace Services
             _repository.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<Doctor> entities)
-        {
-            _repository.RemoveRange(entities);
-        }
-
-        public async Task SaveChangesAsync() 
+        public async Task SaveChangesAsync()
         {
             await _repository.SaveChangesAsync();
+        }
+
+        public async Task<Doctor> RegisterAsync(Doctor doctor)
+        {
+            await _repository.AddAsync(doctor);
+            await _repository.SaveChangesAsync();
+            return doctor;
         }
 
         public async Task<Doctor> LoginAsync(string name, string password)
@@ -80,14 +78,6 @@ namespace Services
             return await _repository.DoctorExistsAsync(name);
         }
 
-
-        public async Task<Doctor> RegisterAsync(Doctor doctor)
-        {
-            
-            await _repository.AddAsync(doctor);
-            await _repository.SaveChangesAsync();
-            return doctor;
-        }
 
     }
 }

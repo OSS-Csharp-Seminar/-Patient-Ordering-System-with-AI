@@ -17,8 +17,8 @@ namespace Hospital.Pages
             _doctorService = doctorService;
         }
 
-        [BindProperty]
-        public Doctor Doctor { get; set; }
+            [BindProperty]
+        public Doctor Doctor { get; set; } = new Doctor();
         public List<Doctor> Doctors { get; set; }
 
         public async Task OnGetAsync()

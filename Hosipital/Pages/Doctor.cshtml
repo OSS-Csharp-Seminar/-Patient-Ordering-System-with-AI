@@ -34,11 +34,10 @@
         }
     </tbody>
 </table>
-
 <!-- Create or Update Doctor Form -->
 <h2>@(Model.Doctor.Id == 0 ? "Create Doctor" : "Update Doctor")</h2>
 <form method="post" asp-page-handler="@(Model.Doctor.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Doctor.Id">
-    <input type="hidden" asp-for="Doctor.Id" />
+    <input type="text" asp-for="Doctor.Id" />
     <div>
         <label asp-for="Doctor.Name"></label>
         <input asp-for="Doctor.Name" />
@@ -66,54 +65,3 @@
     </div>
     <button type="submit">@(Model.Doctor.Id == 0 ? "Create" : "Update")</button>
 </form>
-
-<!-- Register Form -->
-<h2>Register</h2>
-<form method="post" asp-page-handler="Register">
-    <div>
-        <label asp-for="Doctor.Name"></label>
-        <input asp-for="Doctor.Name" />
-        <span asp-validation-for="Doctor.Name"></span>
-    </div>
-    <div>
-        <label asp-for="Doctor.Surname"></label>
-        <input asp-for="Doctor.Surname" />
-        <span asp-validation-for="Doctor.Surname"></span>
-    </div>
-    <div>
-        <label asp-for="Doctor.Contact"></label>
-        <input asp-for="Doctor.Contact" />
-        <span asp-validation-for="Doctor.Contact"></span>
-    </div>
-    <div>
-        <label asp-for="Doctor.Password"></label>
-        <input asp-for="Doctor.Password" type="password" />
-        <span asp-validation-for="Doctor.Password"></span>
-    </div>
-    <div>
-        <label asp-for="Doctor.SpecializationId"></label>
-        <input asp-for="Doctor.SpecializationId" />
-        <span asp-validation-for="Doctor.SpecializationId"></span>
-    </div>
-    <button type="submit">Register</button>
-</form>
-
-<!-- Login Form -->
-<h2>Login</h2>
-<form method="post" asp-page-handler="Login">
-    <div>
-        <label asp-for="Doctor.Name"></label>
-        <input asp-for="Doctor.Name" />
-        <span asp-validation-for="Doctor.Name"></span>
-    </div>
-    <div>
-        <label asp-for="Doctor.Password"></label>
-        <input asp-for="Doctor.Password" type="password" />
-        <span asp-validation-for="Doctor.Password"></span>
-    </div>
-    <button type="submit">Login</button>
-</form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

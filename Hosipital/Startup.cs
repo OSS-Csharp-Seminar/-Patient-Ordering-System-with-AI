@@ -24,8 +24,8 @@ public class Startup
         services.AddRazorPages();
 
         services.AddScoped<ISpecializationService,SpecializationService>();
-        services.AddScoped<IPatientService,PatientService>();
-        services.AddScoped<DoctorService>();
+        services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IDoctorService, DoctorService>();
         services.AddScoped<IOrderService,OrderService>();
 
         services.AddScoped<SpecializationRepository>();

@@ -18,8 +18,9 @@ namespace Hosipital.Pages
         }
 
         [BindProperty]
-        public Patient Patient { get; set; }
-        public List<Patient> Patients { get; set; }
+        public Patient Patient { get; set; } = new Patient(); // Ensure Patient is initialized
+
+        public List<Patient> Patients { get; set; } = new List<Patient>(); // Ensure Patients is initialized
 
         public async Task OnGetAsync()
         {
@@ -33,9 +34,19 @@ namespace Hosipital.Pages
                 return Page();
             }
 
-            await _patientService.AddAsync(Patient);
+            if (Patient.Id == 0)
+            {
+                await _patientService.AddAsync(Patient);
+            }
+            else
+            {
+                _patientService.Update(Patient);
+            }
+
+            await _patientService.SaveChangesAsync();
             return RedirectToPage();
         }
+
 
         public async Task<IActionResult> OnPostUpdateAsync(int id)
         {
@@ -69,40 +80,6 @@ namespace Hosipital.Pages
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostRegisterAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
-            try
-            {
-                await _patientService.AddAsync(Patient);
-                return RedirectToPage();
-            }
-            catch
-            {
-                ModelState.AddModelError("", "Error occurred during registration.");
-                return Page();
-            }
-        }
-
-        public async Task<IActionResult> OnPostLoginAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var authenticatedPatient = await _patientService.LoginAsync(Patient.Name, Patient.Password);
-            if (authenticatedPatient == null)
-            {
-                ModelState.AddModelError("", "Invalid login credentials.");
-                return Page();
-            }
-
-            return RedirectToPage();
-        }
     }
 }
