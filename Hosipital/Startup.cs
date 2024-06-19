@@ -9,6 +9,7 @@ using DataAccess;
 using Services;
 using Repositories;
 
+
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -22,25 +23,18 @@ public class Startup
     {
         services.AddRazorPages();
 
-
-        services.AddScoped<SpecializationService>();
-        services.AddScoped<PatientService>();
+        services.AddScoped<ISpecializationService,SpecializationService>();
+        services.AddScoped<IPatientService,PatientService>();
         services.AddScoped<DoctorService>();
-        services.AddScoped<OrderService>();
+        services.AddScoped<IOrderService,OrderService>();
 
-
-        services.AddScoped<SpecializationRepository>();  
-        services.AddScoped<PatientRepository>();         
-        services.AddScoped<DoctorRepository>();         
-        services.AddScoped<OrderRepository>();          
-
-
+        services.AddScoped<SpecializationRepository>();
+        services.AddScoped<PatientRepository>();
+        services.AddScoped<DoctorRepository>();
+        services.AddScoped<OrderRepository>();
 
         services.AddControllers().AddNewtonsoftJson();
-        
-        
-        
-        
+
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital API", Version = "v1" });
@@ -48,10 +42,8 @@ public class Startup
 
         services.AddDbContext<DatabaseContext>(options =>
         {
-            options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 4, 0)));
-
+            options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21)));
         });
-
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

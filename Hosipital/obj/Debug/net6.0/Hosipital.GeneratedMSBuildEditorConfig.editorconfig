@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipital
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Doctor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -23,12 +27,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Order.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Patient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/Specializations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3BlY2lhbGl6YXRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Josip Domjanović/OneDrive/Radna površina/c\# projetk/Hosipital/Hosipital/Pages/_ViewImports.cshtml]

@@ -1,0 +1,73 @@
+﻿@page
+@model Hospital.Pages.OrdersModel
+
+<h1>Orders</h1>
+
+<!-- List of Orders -->
+<h2>Order List</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Doctor ID</th>
+            <th>Patient ID</th>
+            <th>Date Of Appointment</th>
+            <th>Diagnosis</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.DoctorId</td>
+                <td>@order.PatientId</td>
+                <td>@order.DateOfAppointment</td>
+                <td>@order.Diagnosis</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@order.Id">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Create or Update Order Form -->
+<h2>@(Model.Order.Id == 0 ? "Create Order" : "Update Order")</h2>
+<form method="post" asp-page-handler="@(Model.Order.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Order.Id">
+    <input type="hidden" asp-for="Order.Id" />
+    <div>
+        <label asp-for="Order.DoctorId"></label>
+        <input asp-for="Order.DoctorId" />
+        <span asp-validation-for="Order.DoctorId"></span>
+    </div>
+    <div>
+        <label asp-for="Order.PatientId"></label>
+        <input asp-for="Order.PatientId" />
+        <span asp-validation-for="Order.PatientId"></span>
+    </div>
+    <div>
+        <label asp-for="Order.DateOfAppointment"></label>
+        <input asp-for="Order.DateOfAppointment" type="datetime-local" />
+        <span asp-validation-for="Order.DateOfAppointment"></span>
+    </div>
+    <div>
+        <label asp-for="Order.Diagnosis"></label>
+        <input asp-for="Order.Diagnosis" />
+        <span asp-validation-for="Order.Diagnosis"></span>
+    </div>
+    <button type="submit">@(Model.Order.Id == 0 ? "Create" : "Update")</button>
+</form>
+
+<!-- Check Available Time Slots -->
+<h2>Check Available Time Slots</h2>
+<form method="post" asp-page-handler="CheckAvailability">
+    <button type="submit">Check Availability</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

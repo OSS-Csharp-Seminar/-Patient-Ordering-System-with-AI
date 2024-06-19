@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Hosipital": {
+    "Hospital": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -37,4 +37,3 @@
     }
   }
 }
-

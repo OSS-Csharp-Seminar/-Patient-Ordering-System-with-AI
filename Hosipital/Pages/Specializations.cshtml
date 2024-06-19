@@ -1,0 +1,51 @@
+﻿@page
+@model Pages.SpecializationsModel
+@{
+    ViewData["Title"] = "Specializations";
+}
+
+<h2>Specializations</h2>
+
+<form method="post" asp-page-handler="Create">
+    <div class="form-group">
+        <label asp-for="Specialization.Name"></label>
+        <input asp-for="Specialization.Name" class="form-control" />
+        <span asp-validation-for="Specialization.Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var specialization in Model.Specializations)
+        {
+            <tr>
+                <td>@specialization.Id</td>
+                <td>@specialization.Name</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@specialization.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <form method="post" asp-page-handler="Update" asp-route-id="@specialization.Id" style="display:inline;">
+                        <input type="hidden" name="Specialization.Id" value="@specialization.Id" />
+                        <input type="text" name="Specialization.Name" value="@specialization.Name" />
+                        <button type="submit" class="btn btn-secondary">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
