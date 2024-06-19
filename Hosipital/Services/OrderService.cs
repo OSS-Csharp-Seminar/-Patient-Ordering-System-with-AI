@@ -19,7 +19,7 @@ namespace Services
             string sortBy = null);
         Task AddAsync(Order entity);
         Task AddRangeAsync(IEnumerable<Order> entities);
-        void Update(Order entity);
+        Task UpdateAsync(Order entity);
         void Remove(Order entity);
         void RemoveRange(IEnumerable<Order> entities);
         Task<IEnumerable<DateTime>> GetAvailableTimeSlotsAsync();
@@ -64,10 +64,10 @@ namespace Services
             await SaveChangesAsync();
         }
 
-        public void Update(Order entity)
+        public async Task UpdateAsync(Order entity)
         {
             _repository.Update(entity);
-            SaveChangesAsync().Wait();
+            await SaveChangesAsync();
         }
 
         public void Remove(Order entity)

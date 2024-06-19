@@ -35,7 +35,6 @@
     </tbody>
 </table>
 
-<!-- Create or Update Order Form -->
 <h2>@(Model.Order.Id == 0 ? "Create Order" : "Update Order")</h2>
 <form method="post" asp-page-handler="@(Model.Order.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Order.Id">
     <input type="hidden" asp-for="Order.Id" />

@@ -70,4 +70,3 @@ C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipit
 C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipital\obj\Debug\net6.0\Hosipital.genruntimeconfig.cache
 C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipital\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipital\bin\Debug\net6.0\MySql.Data.EntityFrameworkCore.dll
-C:\Users\Josip Domjanović\OneDrive\Radna površina\c# projetk\Hosipital\Hosipital\obj\Debug\net6.0\Hosipital.csproj.AssemblyReference.cache

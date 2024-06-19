@@ -89,5 +89,13 @@ namespace Repositories
             return await query.ToListAsync();
         }
 
+
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }

@@ -17,15 +17,21 @@ namespace Hosipital.Pages
             _patientService = patientService;
         }
 
-        [BindProperty]
-        public Patient Patient { get; set; } = new Patient(); // Ensure Patient is initialized
+        [BindProperty(SupportsGet = true)]
+        public string FilterBy { get; set; }
 
-        public List<Patient> Patients { get; set; } = new List<Patient>(); // Ensure Patients is initialized
+        [BindProperty(SupportsGet = true)]
+        public string SortBy { get; set; }
+
+        public List<Patient> Patients { get; set; } = new List<Patient>();
 
         public async Task OnGetAsync()
         {
-            Patients = (await _patientService.GetAllAsync()).ToList();
+            Patients = (await _patientService.GetAllAsync(SortBy, FilterBy)).ToList();
         }
+
+        [BindProperty]
+        public Patient NewPatient { get; set; } = new Patient(); // Corrected from previous
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
@@ -34,19 +40,9 @@ namespace Hosipital.Pages
                 return Page();
             }
 
-            if (Patient.Id == 0)
-            {
-                await _patientService.AddAsync(Patient);
-            }
-            else
-            {
-                _patientService.Update(Patient);
-            }
-
-            await _patientService.SaveChangesAsync();
+            await _patientService.AddAsync(NewPatient); // Updated to use NewPatient
             return RedirectToPage();
         }
-
 
         public async Task<IActionResult> OnPostUpdateAsync(int id)
         {
@@ -55,14 +51,17 @@ namespace Hosipital.Pages
                 return Page();
             }
 
-            if (id != Patient.Id)
+            var patientToUpdate = await _patientService.GetByIdAsync(id);
+            if (patientToUpdate == null)
             {
-                return BadRequest("Patient ID mismatch.");
+                return NotFound();
             }
 
-            _patientService.Update(Patient);
-            await _patientService.SaveChangesAsync();
+            patientToUpdate.Name = NewPatient.Name; // Example of updating fields
+            patientToUpdate.Surname = NewPatient.Surname;
+            patientToUpdate.Contact = NewPatient.Contact;
 
+            _patientService.Update(patientToUpdate);
             return RedirectToPage();
         }
 
@@ -75,11 +74,7 @@ namespace Hosipital.Pages
             }
 
             _patientService.Remove(patient);
-            await _patientService.SaveChangesAsync();
-
             return RedirectToPage();
         }
-
-
     }
 }

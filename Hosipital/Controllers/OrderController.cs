@@ -58,7 +58,7 @@ namespace Controllers
                 return BadRequest();
             }
 
-            _orderService.Update(order);
+            _orderService.UpdateAsync(order);
 
             try
             {

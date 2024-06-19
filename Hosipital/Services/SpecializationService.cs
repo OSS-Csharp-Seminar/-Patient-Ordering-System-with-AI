@@ -9,12 +9,14 @@ namespace Services
     public interface ISpecializationService
     {
         Task<Specialization> GetByIdAsync(int id);
-        Task<IEnumerable<Specialization>> GetAllAsync();
+        Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null);
         Task AddAsync(Specialization entity);
         Task AddRangeAsync(IEnumerable<Specialization> entities);
         void Update(Specialization entity);
         void Remove(Specialization entity);
         void RemoveRange(IEnumerable<Specialization> entities);
+        Task SaveChangesAsync();
+
     }
 
     public class SpecializationService : ISpecializationService
@@ -65,6 +67,12 @@ namespace Services
         {
             return await _repository.GetAllAsync(sortBy, filterBy);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _repository.SaveChangesAsync();
+        }
+
 
     }
 }

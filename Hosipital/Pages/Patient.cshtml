@@ -1,16 +1,40 @@
 ﻿@page
 @model Hosipital.Pages.PatientsModel
+@{
+    ViewData["Title"] = "Patients";
+}
 
 <h1>Patients</h1>
 
-<!-- List of Patients -->
+<!-- Filter by Name -->
+
+            <th>SORT BY : </th>
+            <th>
+                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Name" ? "Name_Desc" : "Name")">Name</a>
+            </th>
+            <th>
+                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Surname" ? "Surname_Desc" : "Surname")">Surname</a>
+            </th>
+<form method="get">
+    <div class="form-group">
+        <label>Filter Patients</label>
+        <input type="text" name="filterBy" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<!-- Patient List -->
 <h2>Patient List</h2>
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
+            <th>
+                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Name" ? "Name_Desc" : "Name")">Name</a>
+            </th>
+            <th>
+                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Surname" ? "Surname_Desc" : "Surname")">Surname</a>
+            </th>
             <th>Contact</th>
             <th>Actions</th>
         </tr>
@@ -25,7 +49,7 @@
                 <td>@patient.Contact</td>
                 <td>
                     <form method="post" asp-page-handler="Delete" asp-route-id="@patient.Id">
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -34,30 +58,28 @@
 </table>
 
 <!-- Create or Update Patient Form -->
-<h2>@(Model.Patient.Id == 0 ? "Create Patient" : "Update Patient")</h2>
-<form method="post" asp-page-handler="@(Model.Patient.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Patient.Id">
-    <input type="text" asp-for="Patient.Id" />
-    <div>
-        <label asp-for="Patient.Name"></label>
-        <input asp-for="Patient.Name" />
-        <span asp-validation-for="Patient.Name"></span>
+<h2>@(Model.NewPatient.Id == 0 ? "Create Patient" : "Update Patient")</h2>
+<form method="post" asp-page-handler="@(Model.NewPatient.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.NewPatient.Id">
+    <input type="text" asp-for="NewPatient.Id" />
+    <div class="form-group">
+        <label asp-for="NewPatient.Name"></label>
+        <input asp-for="NewPatient.Name" class="form-control" />
+        <span asp-validation-for="NewPatient.Name" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Patient.Surname"></label>
-        <input asp-for="Patient.Surname" />
-        <span asp-validation-for="Patient.Surname"></span>
+    <div class="form-group">
+        <label asp-for="NewPatient.Surname"></label>
+        <input asp-for="NewPatient.Surname" class="form-control" />
+        <span asp-validation-for="NewPatient.Surname" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Patient.Contact"></label>
-        <input asp-for="Patient.Contact" />
-        <span asp-validation-for="Patient.Contact"></span>
+    <div class="form-group">
+        <label asp-for="NewPatient.Contact"></label>
+        <input asp-for="NewPatient.Contact" class="form-control" />
+        <span asp-validation-for="NewPatient.Contact" class="text-danger"></span>
     </div>
-    <div>
-        <label asp-for="Patient.Password"></label>
-        <input asp-for="Patient.Password" type="password" />
-        <span asp-validation-for="Patient.Password"></span>
+    <div class="form-group">
+        <label asp-for="NewPatient.Password"></label>
+        <input asp-for="NewPatient.Password" type="password" class="form-control" />
+        <span asp-validation-for="NewPatient.Password" class="text-danger"></span>
     </div>
-    <button type="submit">@(Model.Patient.Id == 0 ? "Create" : "Update")</button>
+    <button type="submit" class="btn btn-primary">@(Model.NewPatient.Id == 0 ? "Create" : "Update")</button>
 </form>
-
-

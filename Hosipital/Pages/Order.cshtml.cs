@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +15,8 @@ namespace Hospital.Pages
         public OrdersModel(IOrderService orderService)
         {
             _orderService = orderService;
+            Order = new Order(); // Initialize the Order property
+            Orders = new List<Order>(); // Initialize the Orders property
         }
 
         [BindProperty]
@@ -29,30 +30,17 @@ namespace Hospital.Pages
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
+            if (Order == null) // Check if Order is null
+            {
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             await _orderService.AddAsync(Order);
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostUpdateAsync(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            if (id != Order.Id)
-            {
-                return BadRequest("Order ID mismatch.");
-            }
-
-            _orderService.Update(Order);
-            await _orderService.SaveChangesAsync();
-
             return RedirectToPage();
         }
 
@@ -65,15 +53,33 @@ namespace Hospital.Pages
             }
 
             _orderService.Remove(order);
-            await _orderService.SaveChangesAsync();
+            return RedirectToPage();
+        }
 
+        public async Task<IActionResult> OnPostUpdateAsync(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var orderToUpdate = await _orderService.GetByIdAsync(id);
+            if (orderToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            orderToUpdate.DoctorId = Order.DoctorId;
+            orderToUpdate.PatientId = Order.PatientId;
+            orderToUpdate.DateOfAppointment = Order.DateOfAppointment;
+            orderToUpdate.Diagnosis = Order.Diagnosis;
+
+            await _orderService.UpdateAsync(orderToUpdate);
             return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostCheckAvailabilityAsync()
         {
-            var availableTimeSlots = await _orderService.GetAvailableTimeSlotsAsync();
-            // You can add code here to handle the available time slots, e.g., showing them in the UI
             return Page();
         }
     }

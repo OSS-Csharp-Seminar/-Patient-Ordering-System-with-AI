@@ -1,10 +1,27 @@
 ﻿@page
-@model Pages.SpecializationsModel
+@model Hosipital.Pages.SpecializationsModel
 @{
     ViewData["Title"] = "Specializations";
 }
 
 <h2>Specializations</h2>
+
+<form method="get">
+    <div class="form-group">
+        <label>Filter by Name</label>
+        <input type="text" name="filterBy" class="form-control" value="@Model.FilterBy" />
+    </div>
+    <div class="form-group">
+        <label>Sort by</label>
+        <select name="sortBy" class="form-control">
+    <option value="">Select...</option>
+    <option value="name" selected='@(Model.SortBy == "name")'>Name (Ascending)</option>
+    <option value="name_desc" selected='@(Model.SortBy == "name_desc")'>Name (Descending)</option>
+</select>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
+</form>
 
 <form method="post" asp-page-handler="Create">
     <div class="form-group">
@@ -17,34 +34,41 @@
 
 <hr />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var specialization in Model.Specializations)
-        {
+@if (Model.Specializations != null && Model.Specializations.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@specialization.Id</td>
-                <td>@specialization.Name</td>
-                <td>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@specialization.Id" style="display:inline;">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                    <form method="post" asp-page-handler="Update" asp-route-id="@specialization.Id" style="display:inline;">
-                        <input type="hidden" name="Specialization.Id" value="@specialization.Id" />
-                        <input type="text" name="Specialization.Name" value="@specialization.Name" />
-                        <button type="submit" class="btn btn-secondary">Update</button>
-                    </form>
-                </td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var specialization in Model.Specializations)
+            {
+                <tr>
+                    <td>@specialization.Id</td>
+                    <td>@specialization.Name</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@specialization.Id" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <form method="post" asp-page-handler="Update" asp-route-id="@specialization.Id" style="display:inline;">
+                            <input type="hidden" name="Specialization.Id" value="@specialization.Id" />
+                            <input type="text" name="Specialization.Name" value="@specialization.Name" />
+                            <button type="submit" class="btn btn-secondary">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No specializations available.</p>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
