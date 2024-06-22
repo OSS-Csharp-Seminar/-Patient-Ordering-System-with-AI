@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hosipital.Pages
+namespace Hospital.Pages
 {
     public class SpecializationsModel : PageModel
     {
@@ -15,8 +15,6 @@ namespace Hosipital.Pages
         public SpecializationsModel(ISpecializationService specializationService)
         {
             _specializationService = specializationService;
-            Specialization = new Specialization();
-            Specializations = new List<Specialization>();
         }
 
         [BindProperty]
@@ -36,18 +34,15 @@ namespace Hosipital.Pages
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (Specialization == null)
-            {
-                return Page();
-            }
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             await _specializationService.AddAsync(Specialization);
-            return RedirectToPage(new { sortBy = SortBy, filterBy = FilterBy });
+            await _specializationService.SaveChangesAsync();
+
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
@@ -58,27 +53,29 @@ namespace Hosipital.Pages
                 return NotFound();
             }
 
-            _specializationService.Remove(specialization);
+            await _specializationService.RemoveAsync(specialization);
+            await _specializationService.SaveChangesAsync();
+
             return RedirectToPage(new { sortBy = SortBy, filterBy = FilterBy });
         }
 
-        public async Task<IActionResult> OnPostUpdateAsync()
+        public async Task<IActionResult> OnPostUpdateAsync(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            var specializationToUpdate = await _specializationService.GetByIdAsync(Specialization.Id);
+            var specializationToUpdate = await _specializationService.GetByIdAsync(id);
             if (specializationToUpdate == null)
             {
                 return NotFound();
             }
 
-            specializationToUpdate.Name = Specialization.Name;
-            await _specializationService.SaveChangesAsync();
+            if (await TryUpdateModelAsync(specializationToUpdate, "Specialization", s => s.Name))
+            {
+                await _specializationService.UpdateAsync(specializationToUpdate);
+                await _specializationService.SaveChangesAsync();
 
-            return RedirectToPage(new { sortBy = SortBy, filterBy = FilterBy });
+                return RedirectToPage(new { sortBy = SortBy, filterBy = FilterBy });
+            }
+
+            return Page();
         }
     }
 }

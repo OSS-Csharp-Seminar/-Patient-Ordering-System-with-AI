@@ -37,7 +37,7 @@
 <!-- Create or Update Doctor Form -->
 <h2>@(Model.Doctor.Id == 0 ? "Create Doctor" : "Update Doctor")</h2>
 <form method="post" asp-page-handler="@(Model.Doctor.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.Doctor.Id">
-    <input type="text" asp-for="Doctor.Id" />
+    <input type="hidden" asp-for="Doctor.Id" />
     <div>
         <label asp-for="Doctor.Name"></label>
         <input asp-for="Doctor.Name" />

@@ -11,7 +11,7 @@ namespace Services
         Task<IEnumerable<Patient>> GetAllAsync(string sortBy = null, string filterBy = null);
         Task AddAsync(Patient entity);
         Task AddRangeAsync(IEnumerable<Patient> entities);
-        void Update(Patient entity);
+        Task UpdateAsync(Patient entity); 
         void Remove(Patient entity);
         void RemoveRange(IEnumerable<Patient> entities);
         Task<Patient> LoginAsync(string name, string password);
@@ -50,10 +50,10 @@ namespace Services
             await SaveChangesAsync();
         }
 
-        public void Update(Patient entity)
+        public async Task UpdateAsync(Patient entity)
         {
             _repository.Update(entity);
-            SaveChangesAsync().Wait();
+            await SaveChangesAsync();
         }
 
         public void Remove(Patient entity)

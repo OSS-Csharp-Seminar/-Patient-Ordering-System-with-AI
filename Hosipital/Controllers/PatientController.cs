@@ -51,7 +51,7 @@ namespace Controllers
                 return BadRequest();
             }
 
-            _patientService.Update(patient);
+            _patientService.UpdateAsync(patient);
 
             try
             {

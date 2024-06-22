@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Models; 
-using Services; 
+using Models;
+using Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,9 +24,6 @@ namespace Controllers
             return Ok(specialization);
         }
 
-        
-        
-
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -46,23 +43,22 @@ namespace Controllers
                 return BadRequest("Specialization ID mismatch.");
             }
 
-            _specializationService.Update(specialization);
+            _specializationService.UpdateAsync(specialization);
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var specialization = _specializationService.GetByIdAsync(id).Result;
+            var specialization = await _specializationService.GetByIdAsync(id);
             if (specialization == null)
             {
                 return NotFound();
             }
 
-            _specializationService.Remove(specialization);
+            _specializationService.RemoveAsync(specialization);
             return NoContent();
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? filterBy = null)
@@ -70,8 +66,5 @@ namespace Controllers
             var specializations = await _specializationService.GetAllAsync(sortBy, filterBy);
             return Ok(specializations);
         }
-
-
-
     }
 }

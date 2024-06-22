@@ -1,5 +1,5 @@
 ﻿@page
-@model Hosipital.Pages.SpecializationsModel
+@model Hospital.Pages.SpecializationsModel
 @{
     ViewData["Title"] = "Specializations";
 }
@@ -14,16 +14,16 @@
     <div class="form-group">
         <label>Sort by</label>
         <select name="sortBy" class="form-control">
-    <option value="">Select...</option>
-    <option value="name" selected='@(Model.SortBy == "name")'>Name (Ascending)</option>
-    <option value="name_desc" selected='@(Model.SortBy == "name_desc")'>Name (Descending)</option>
-</select>
-
+            <option value="">Select...</option>
+            <option value="name" selected='@(Model.SortBy == "name")'>Name (Ascending)</option>
+            <option value="name_desc" selected='@(Model.SortBy == "name_desc")'>Name (Descending)</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Apply</button>
 </form>
 
 <form method="post" asp-page-handler="Create">
+    <h4>Create new specialization</h4>
     <div class="form-group">
         <label asp-for="Specialization.Name"></label>
         <input asp-for="Specialization.Name" class="form-control" />
@@ -36,6 +36,7 @@
 
 @if (Model.Specializations != null && Model.Specializations.Any())
 {
+    <h4>All specializations</h4>
     <table class="table">
         <thead>
             <tr>
@@ -55,8 +56,7 @@
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                         <form method="post" asp-page-handler="Update" asp-route-id="@specialization.Id" style="display:inline;">
-                            <input type="hidden" name="Specialization.Id" value="@specialization.Id" />
-                            <input type="text" name="Specialization.Name" value="@specialization.Name" />
+                            <input type="text" name="Specialization.Name" value="@specialization.Name" class="form-control" />
                             <button type="submit" class="btn btn-secondary">Update</button>
                         </form>
                     </td>

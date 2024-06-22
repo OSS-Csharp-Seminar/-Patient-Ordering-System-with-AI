@@ -1,5 +1,5 @@
 ﻿@page
-@model Hosipital.Pages.PatientsModel
+@model Hospital.Pages.PatientsModel
 @{
     ViewData["Title"] = "Patients";
 }
@@ -7,20 +7,22 @@
 <h1>Patients</h1>
 
 <!-- Filter by Name -->
-
-            <th>SORT BY : </th>
-            <th>
-                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Name" ? "Name_Desc" : "Name")">Name</a>
-            </th>
-            <th>
-                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Surname" ? "Surname_Desc" : "Surname")">Surname</a>
-            </th>
 <form method="get">
     <div class="form-group">
-        <label>Filter Patients</label>
-        <input type="text" name="filterBy" class="form-control" />
+        <label>Filter by Name</label>
+        <input type="text" name="filterBy" class="form-control" value="@Model.FilterBy" />
     </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <div class="form-group">
+        <label>Sort by</label>
+        <select name="sortBy" class="form-control">
+            <option value="">Select...</option>
+            <option value="name" selected='@(Model.SortBy == "name")'>Name (Ascending)</option>
+            <option value="name_desc" selected='@(Model.SortBy == "name_desc")'>Name (Descending)</option>
+            <option value="surname" selected='@(Model.SortBy == "surname")'>Surname (Ascending)</option>
+            <option value="surname_desc" selected='@(Model.SortBy == "surname_desc")'>Surname (Descending)</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
 </form>
 
 <!-- Patient List -->
@@ -29,12 +31,8 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>
-                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Name" ? "Name_Desc" : "Name")">Name</a>
-            </th>
-            <th>
-                <a asp-page-handler="OnGetAsync" asp-route-sortBy="@(Model.SortBy == "Surname" ? "Surname_Desc" : "Surname")">Surname</a>
-            </th>
+            <th>Name</th>
+            <th>Surname</th>
             <th>Contact</th>
             <th>Actions</th>
         </tr>
@@ -48,8 +46,15 @@
                 <td>@patient.Surname</td>
                 <td>@patient.Contact</td>
                 <td>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@patient.Id">
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@patient.Id" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <form method="post" asp-page-handler="Update" asp-route-id="@patient.Id" style="display:inline;">
+                        <input type="text" name="Patient.Name" value="@patient.Name" class="form-control" />
+                        <input type="text" name="Patient.Surname" value="@patient.Surname" class="form-control" />
+                        <input type="text" name="Patient.Contact" value="@patient.Contact" class="form-control" />
+                        <input type="password" name="Patient.Password" class="form-control" />
+                        <button type="submit" class="btn btn-secondary">Update</button>
                     </form>
                 </td>
             </tr>
@@ -57,29 +62,32 @@
     </tbody>
 </table>
 
-<!-- Create or Update Patient Form -->
-<h2>@(Model.NewPatient.Id == 0 ? "Create Patient" : "Update Patient")</h2>
-<form method="post" asp-page-handler="@(Model.NewPatient.Id == 0 ? "Create" : "Update")" asp-route-id="@Model.NewPatient.Id">
-    <input type="text" asp-for="NewPatient.Id" />
+<!-- Create Patient Form -->
+<h2>Create New Patient</h2>
+<form method="post" asp-page-handler="Create">
     <div class="form-group">
-        <label asp-for="NewPatient.Name"></label>
-        <input asp-for="NewPatient.Name" class="form-control" />
-        <span asp-validation-for="NewPatient.Name" class="text-danger"></span>
+        <label asp-for="Patient.Name"></label>
+        <input asp-for="Patient.Name" class="form-control" />
+        <span asp-validation-for="Patient.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="NewPatient.Surname"></label>
-        <input asp-for="NewPatient.Surname" class="form-control" />
-        <span asp-validation-for="NewPatient.Surname" class="text-danger"></span>
+        <label asp-for="Patient.Surname"></label>
+        <input asp-for="Patient.Surname" class="form-control" />
+        <span asp-validation-for="Patient.Surname" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="NewPatient.Contact"></label>
-        <input asp-for="NewPatient.Contact" class="form-control" />
-        <span asp-validation-for="NewPatient.Contact" class="text-danger"></span>
+        <label asp-for="Patient.Contact"></label>
+        <input asp-for="Patient.Contact" class="form-control" />
+        <span asp-validation-for="Patient.Contact" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="NewPatient.Password"></label>
-        <input asp-for="NewPatient.Password" type="password" class="form-control" />
-        <span asp-validation-for="NewPatient.Password" class="text-danger"></span>
+        <label asp-for="Patient.Password"></label>
+        <input asp-for="Patient.Password" type="password" class="form-control" />
+        <span asp-validation-for="Patient.Password" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">@(Model.NewPatient.Id == 0 ? "Create" : "Update")</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

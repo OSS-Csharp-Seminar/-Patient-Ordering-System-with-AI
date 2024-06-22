@@ -8,16 +8,14 @@ namespace Services
 {
     public interface ISpecializationService
     {
-        Task<Specialization> GetByIdAsync(int id);
         Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null);
-        Task AddAsync(Specialization entity);
-        Task AddRangeAsync(IEnumerable<Specialization> entities);
-        void Update(Specialization entity);
-        void Remove(Specialization entity);
-        void RemoveRange(IEnumerable<Specialization> entities);
+        Task<Specialization> GetByIdAsync(int id);
+        Task AddAsync(Specialization specialization);
+        Task UpdateAsync(Specialization specialization);
+        Task RemoveAsync(Specialization specialization);
         Task SaveChangesAsync();
-
     }
+
 
     public class SpecializationService : ISpecializationService
     {
@@ -28,51 +26,36 @@ namespace Services
             _repository = repository;
         }
 
+        public async Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null)
+        {
+            return await _repository.GetAllAsync(sortBy, filterBy);
+        }
+
         public async Task<Specialization> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Specialization>> GetAllAsync()
+        public async Task AddAsync(Specialization specialization)
         {
-            return await _repository.GetAllAsync();
+            await _repository.AddAsync(specialization);
         }
 
-        public async Task AddAsync(Specialization entity)
+        public async Task UpdateAsync(Specialization specialization)
         {
-            await _repository.AddAsync(entity);
+            _repository.Update(specialization);
         }
 
-        public async Task AddRangeAsync(IEnumerable<Specialization> entities)
+        public async Task RemoveAsync(Specialization specialization)
         {
-            await _repository.AddRangeAsync(entities);
-        }
-
-        public void Update(Specialization entity)
-        {
-            _repository.Update(entity);
-        }
-
-        public void Remove(Specialization entity)
-        {
-            _repository.Remove(entity);
-        }
-
-        public void RemoveRange(IEnumerable<Specialization> entities)
-        {
-            _repository.RemoveRange(entities);
-        }
-
-        public async Task<IEnumerable<Specialization>> GetAllAsync(string sortBy = null, string filterBy = null)
-        {
-            return await _repository.GetAllAsync(sortBy, filterBy);
+            _repository.Remove(specialization);
         }
 
         public async Task SaveChangesAsync()
         {
             await _repository.SaveChangesAsync();
         }
-
-
     }
+
+
 }

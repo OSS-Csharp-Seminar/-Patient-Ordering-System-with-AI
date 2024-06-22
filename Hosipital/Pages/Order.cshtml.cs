@@ -15,8 +15,8 @@ namespace Hospital.Pages
         public OrdersModel(IOrderService orderService)
         {
             _orderService = orderService;
-            Order = new Order(); // Initialize the Order property
-            Orders = new List<Order>(); // Initialize the Orders property
+            Order = new Order();
+            Orders = new List<Order>(); 
         }
 
         [BindProperty]
@@ -30,7 +30,7 @@ namespace Hospital.Pages
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
-            if (Order == null) // Check if Order is null
+            if (Order == null) 
             {
                 return Page();
             }
